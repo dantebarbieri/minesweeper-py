@@ -61,15 +61,24 @@ class Board:
                         if 0 <= y < len(self.grid) and 0 <= x < len(self.grid[y]) and self.grid[y][x].is_bomb:
                             self.grid[r][c].number += 1
 
+    def flag(self, row, col):
+        if 0 <= row < len(self.grid) and 0 <= col < len(self.grid[row]):
+            delta = self.grid[row][col].flag()
+            self.flags += delta
+            for xoff in range(-1, 2):
+                for yoff in range(-1, 2):
+                    y = row + yoff
+                    x = col + xoff
+                    if 0 <= y < len(self.grid) and 0 <= x < len(self.grid[y]):
+                        self.grid[y][x].flag_count += delta
+        else:
+            raise Exception("The piece you attempted to flag is not in the board!")
+
     def isWon(self):
-        r = 0
         for row in self.grid:
-            c = 0
             for tile in row:
                 if not (tile.revealed or tile.is_bomb):
                     return False
-                c += 1
-            r += 1
         return True
     
     def show(self):

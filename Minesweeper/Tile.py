@@ -68,6 +68,19 @@ class Tile:
         f = self.flagged
         self.flagged = None
         return self.number == 0, self.is_bomb, f
+
+    def flag(self):
+        if self.revealed:
+            return 0
+        elif self.flagged is None:
+            self.flagged = True
+            return 1
+        elif self.flagged:
+            self.flagged = False
+            return 0
+        else:
+            self.flagged = None
+            return -1
     
     def isHovered(self):
         return 0 <= mouseX - self.pos.x <= self.dim.x and 0 <= mouseY - self.pos.y <= self.dim.y

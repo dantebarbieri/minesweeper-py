@@ -1,0 +1,4 @@
+{
+  "code-runner.customCommand": "java -jar processing-py.jar Minesweeper.pyde",
+  "python.pythonPath": "/home/dante/anaconda3/bin/python"
+}
