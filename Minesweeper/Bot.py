@@ -3,19 +3,22 @@ class Bot:
         self.gameover = False
         self.board = b
     
-    def play(self):
+    def play(self, row = None, col = None):
         if not self.board.mines_placed:
-            self.firstMove()
+            self.firstMove(row, col)
         else:
             for i in range(len(self.board.grid)):
                 for j in range(len(self.board.grid[i])):
                     if self.flagAll(i, j):
                         return None
-                    self.revealAll(i, j)
+                    if self.revealAll(i, j):
+                        return None
     
-    def firstMove(self):
-        row = int(random(len(self.board.grid)))
-        col = int(random(len(self.board.grid[row])))
+    def firstMove(self, row = None, col = None):
+        if row is None:
+            row = int(random(len(self.board.grid)))
+        if col is None:
+            col = int(random(len(self.board.grid[row])))
         self.board.placeMines(PVector(col, row))
         self.board.mines_placed = True
         empty, bomb, wasflagged = self.board.grid[row][col].reveal()
